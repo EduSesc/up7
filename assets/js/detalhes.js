@@ -31,7 +31,7 @@ function initApp() {
   const lightboxGallery = document.getElementById("lightbox-gallery");
 
   // Share functionality
-  //const shareButton = document.getElementById("shareButton");
+  const shareButton = document.getElementById("shareButton");
   const lightboxShare = document.getElementById("lightboxShare");
   const shareOptions = document.getElementById("shareOptions");
 
@@ -41,6 +41,9 @@ function initApp() {
     lightboxPrice: !!lightboxPrice,
     lightboxWhatsapp: !!lightboxWhatsapp,
     lightboxGallery: !!lightboxGallery,
+    shareButton: !!shareButton,
+    lightboxShare: !!lightboxShare,
+    shareOptions: !!shareOptions
   });
 
   // Função para abrir o lightbox com carrossel
@@ -124,6 +127,12 @@ function initApp() {
             init: function () {
               lightbox.classList.add("active");
               document.body.style.overflow = "hidden";
+              
+              // Reposiciona o menu de share quando o lightbox abre
+              if (shareOptions) {
+                shareOptions.style.position = 'fixed';
+                shareOptions.style.zIndex = '10010';
+              }
             },
           },
         });
@@ -142,6 +151,12 @@ function initApp() {
       if (lightboxSwiper) {
         lightboxSwiper.destroy();
         lightboxSwiper = null;
+      }
+      
+      // Reseta o posicionamento do menu de share
+      if (shareOptions) {
+        shareOptions.removeAttribute('style');
+        shareOptions.classList.remove("active");
       }
     }
   }
@@ -173,34 +188,48 @@ function initApp() {
     }
   });
 
-  // Share button event handlers
-  if (lightboxShare) {
-    lightboxShare.addEventListener("click", (e) => {
-      e.preventDefault();
-      shareOptions.classList.toggle("active");
-    });
+  // Configuração dos botões de compartilhar - CORREÇÃO COMPLETA
+  function setupShareButton(button, isLightbox = false) {
+    if (button) {
+      button.addEventListener("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Para o botão dentro do lightbox, reposiciona o menu
+        if (isLightbox && shareOptions) {
+          const rect = button.getBoundingClientRect();
+          shareOptions.style.position = 'fixed';
+          shareOptions.style.zIndex = '10010';
+          shareOptions.style.top = (rect.bottom + 10) + 'px';
+          shareOptions.style.left = (rect.left - 100) + 'px';
+        }
+        
+        shareOptions.classList.toggle("active");
+      });
+    }
   }
 
-  if (shareButton) {
-    shareButton.addEventListener("click", () => {
-      shareOptions.classList.toggle("active");
-    });
-  }
+  // Configura ambos os botões
+  setupShareButton(shareButton, false);
+  setupShareButton(lightboxShare, true);
 
-  document.addEventListener("click", (e) => {
-    if (
-      shareButton &&
-      shareOptions &&
-      !shareButton.contains(e.target) &&
-      !shareOptions.contains(e.target)
-    ) {
-      shareOptions.classList.remove("active");
+  // Fecha o menu de share ao clicar fora
+  document.addEventListener("click", function(e) {
+    if (shareOptions && shareOptions.classList.contains("active")) {
+      const isShareButton = e.target.closest('#shareButton') || e.target.closest('#lightboxShare');
+      const isShareOption = e.target.closest('.share-option');
+      const isInsideShareOptions = shareOptions.contains(e.target);
+      
+      if (!isShareButton && !isShareOption && !isInsideShareOptions) {
+        shareOptions.classList.remove("active");
+      }
     }
   });
 
   // Share options functionality
   document.querySelectorAll(".share-option").forEach((option) => {
-    option.addEventListener("click", () => {
+    option.addEventListener("click", function(e) {
+      e.stopPropagation();
       const platform = option.getAttribute("data-platform");
       shareAnnouncement(platform);
       shareOptions.classList.remove("active");
@@ -224,43 +253,26 @@ function initApp() {
     switch (platform) {
       case "facebook":
         window.open(
-          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-            url
-          )}`,
+          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
           "_blank"
         );
         break;
       case "whatsapp":
-        // URL CORRIGIDA para WhatsApp - usando wa.me em vez de api.whatsapp.com
-        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
-          text + " " + url
-        )}`;
-
-        // Verifica se é dispositivo móvel
-        if (
-          /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-            navigator.userAgent
-          )
-        ) {
-          // Para mobile, usa window.location.href para abrir diretamente no app
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + " " + url)}`;
+        if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
           window.location.href = whatsappUrl;
         } else {
-          // Para desktop, abre em nova aba
           window.open(whatsappUrl, "_blank");
         }
         break;
       case "twitter":
         window.open(
-          `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-            text
-          )}&url=${encodeURIComponent(url)}`,
+          `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
           "_blank"
         );
         break;
       case "email":
-        window.location.href = `mailto:?subject=${encodeURIComponent(
-          title
-        )}&body=${encodeURIComponent(text + "\n\n" + url)}`;
+        window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text + "\n\n" + url)}`;
         break;
       case "link":
         navigator.clipboard.writeText(url).then(() => {
@@ -555,6 +567,8 @@ function initApp() {
   if (lightboxWhatsapp) {
     lightboxWhatsapp.addEventListener("click", function (e) {
       e.preventDefault();
+      e.stopPropagation();
+      
       const titleElement = document.getElementById("car-title");
       if (!titleElement) return;
 
