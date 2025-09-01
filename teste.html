@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Técnicas para Ofuscar Imagens</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .techniques {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .image-container {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .card:hover .image-container img {
+            transform: scale(1.05);
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #ffdd59;
+        }
+        
+        .card p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .code {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+        
+        /* Técnicas de ofuscação */
+        .blur img {
+            filter: blur(5px);
+        }
+        
+        .brightness img {
+            filter: brightness(0.3);
+        }
+        
+        .contrast img {
+            filter: contrast(0.2);
+        }
+        
+        .overlay::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        .gradient-overlay::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+        }
+        
+        .pixelate img {
+            image-rendering: pixelated;
+            transform: scale(1.5);
+        }
+        
+        .combination img {
+            filter: blur(3px) grayscale(0.7) opacity(0.8);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .techniques {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Técnicas para Ofuscar Imagens</h1>
+            <p class="subtitle">Explore diferentes métodos CSS para ofuscar, esconder parcialmente ou criar efeitos visuais em imagens</p>
+        </header>
+        
+        <div class="techniques">
+            <!-- Técnica 1: Blur -->
+            <div class="card">
+                <div class="image-container blur">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Exemplo de imagem com blur">
+                </div>
+                <div class="card-content">
+                    <h3>Efeito Blur</h3>
+                    <p>Desfoca a imagem usando o filtro CSS blur().</p>
+                    <div class="code">filter: blur(5px);</div>
+                </div>
+            </div>
+            
+            <!-- Técnica 2: Brilho -->
+            <div class="card">
+                <div class="image-container brightness">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Exemplo de imagem com redução de brilho">
+                </div>
+                <div class="card-content">
+                    <h3>Redução de Brilho</h3>
+                    <p>Escurece a imagem usando o filtro brightness().</p>
+                    <div class="code">filter: brightness(0.3);</div>
+                </div>
+            </div>
+            
+            <!-- Técnica 3: Contraste -->
+            <div class="card">
+                <div class="image-container contrast">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Exemplo de imagem com redução de contraste">
+                </div>
+                <div class="card-content">
+                    <h3>Redução de Contraste</h3>
+                    <p>Diminui o contraste da imagem usando o filtro contrast().</p>
+                    <div class="code">filter: contrast(0.2);</div>
+                </div>
+            </div>
+            
+            <!-- Técnica 4: Overlay -->
+            <div class="card">
+                <div class="image-container overlay">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Exemplo de imagem com overlay escuro">
+                </div>
+                <div class="card-content">
+                    <h3>Overlay Escuro</h3>
+                    <p>Adiciona uma camada semi-transparente sobre a imagem.</p>
+                    <div class="code">
+                        .overlay::after {<br>
+                        &nbsp;&nbsp;content: '';<br>
+                        &nbsp;&nbsp;position: absolute;<br>
+                        &nbsp;&nbsp;top: 0; left: 0;<br>
+                        &nbsp;&nbsp;width: 100%; height: 100%;<br>
+                        &nbsp;&nbsp;background: rgba(0, 0, 0, 0.6);<br>
+                        }
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Técnica 5: Gradiente -->
+            <div class="card">
+                <div class="image-container gradient-overlay">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Exemplo de imagem com gradiente">
+                </div>
+                <div class="card-content">
+                    <h3>Overlay com Gradiente</h3>
+                    <p>Adiciona um gradiente escuro sobre a imagem.</p>
+                    <div class="code">
+                        background: linear-gradient(to bottom,<br>
+                        &nbsp;&nbsp;rgba(0,0,0,0.2) 0%,<br>
+                        &nbsp;&nbsp;rgba(0,0,0,0.8) 100%<br>
+                        );
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Técnica 6: Pixelate -->
+            <div class="card">
+                <div class="image-container pixelate">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Exemplo de imagem pixelada">
+                </div>
+                <div class="card-content">
+                    <h3>Efeito Pixelado</h3>
+                    <p>Cria um efeito de pixelização na imagem.</p>
+                    <div class="code">
+                        image-rendering: pixelated;<br>
+                        transform: scale(1.5);
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Técnica 7: Combinação -->
+            <div class="card">
+                <div class="image-container combination">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Exemplo de combinação de efeitos">
+                </div>
+                <div class="card-content">
+                    <h3>Combinação de Efeitos</h3>
+                    <p>Combina múltiplos filtros para um efeito mais complexo.</p>
+                    <div class="code">filter: blur(3px) grayscale(0.7) opacity(0.8);</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 - Técnicas de Ofuscação de Imagens com CSS</p>
+        </footer>
+    </div>
+</body>
+</html>
