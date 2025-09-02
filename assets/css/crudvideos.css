@@ -38,7 +38,9 @@
 }
 
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Roboto", sans-serif;
+  background-color: #f8f9fa;
+  padding-bottom: 50px;
   background-image: url("https://i.ibb.co/WvWhgh8z/Captura-de-tela-2025-08-22-215542.png");
   background-size: cover;
   background-position: center;
@@ -46,15 +48,17 @@ body {
   background-repeat: no-repeat;
   min-height: 100vh;
   position: relative;
-  color: #333;
 }
 
-body::before {
+body::after {
   content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.6);
-  z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: -1;
 }
 
 body > * {
@@ -62,16 +66,10 @@ body > * {
   z-index: 1;
 }
 
-.space {
-  padding: 25px 0px;
-  height: 30px;
-}
-
 h1,
 h2 {
   color: var(--antigos-primary);
   border-bottom: 2px solid var(--primary-gold);
-  padding-bottom: 10px;
 }
 
 .form-group {
@@ -79,15 +77,14 @@ h2 {
 }
 
 label {
-  display: inline-block; /* Alterado de block para inline-block */
   margin: 15px 0 0.8rem 5px;
   font-size: 20pt;
-  font-weight: 600;
-  color: #2d3436;
-  background-color: #ffeaa7; /* Cor de fundo */
+  width: 100%;
+  background-color: #343a40; /*Cor de fundo */
   padding: 5px 15px; /* Apenas ao redor do texto */
   border-radius: 8px; /* Cantos arredondados */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: var(--light-gray);
 }
 
 input,
@@ -109,6 +106,18 @@ textarea:focus {
   box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
 }
 
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 1.5rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+  min-width: 200px;
+}
+
 .logo {
   height: 40px;
 }
@@ -122,12 +131,12 @@ textarea:focus {
   font-weight: 600;
   transition: all 0.3s;
 }
-
+/*
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0;
-}
+  padding-top: 5px;
+}*/
 
 form {
   padding: 25px 0;
@@ -209,7 +218,7 @@ button {
   align-items: center;
   cursor: pointer;
   padding: 12px 20px;
-  background: #FFEAA7;
+  background: #ffeaa7;
   border-radius: 8px;
   transition: all 0.3s ease;
   border: none;
@@ -454,6 +463,10 @@ button {
     position: sticky; /* Importante para mobile */
   }
 
+  .container {
+    padding-top: 5px;
+  }
+
   /* Ajusta o padding do conteúdo */
   main {
     padding-bottom: 10px; /* Espaço para o menu inferior */
@@ -475,4 +488,3 @@ button {
     flex-direction: column;
   }
 }
-
