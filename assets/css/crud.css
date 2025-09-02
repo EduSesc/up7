@@ -47,6 +47,11 @@ h2 {
   padding-bottom: 10px;
 }
 
+.sombra {
+  text-shadow: -2px -2px 0 var(--primary-gold), 2px -2px 0 var(--primary-gold),
+    -2px 2px 0 var(--primary-gold), 2px 2px 0 var(--primary-gold);
+}
+
 /* Estilos do formulário*/
 .form-group {
   margin-bottom: 1.5rem;
@@ -520,3 +525,4 @@ textarea:focus {
     font-size: 1.2rem;
   }
 }
+
