@@ -7,23 +7,28 @@
 }
 
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Roboto", sans-serif;
+  background-color: #f8f9fa;
+  padding-bottom: 50px;
   background-image: url("https://i.ibb.co/WvWhgh8z/Captura-de-tela-2025-08-22-215542.png");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   background-repeat: no-repeat;
   min-height: 100vh;
-  position: relative;
-  color: #333;
+  position: relative;  
+  color: white
 }
 
-body::before {
+body::after {
   content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.6);
-  z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: -1;
 }
 
 body > * {
@@ -48,15 +53,16 @@ h2 {
 }
 
 label {
-  display: inline-block; /* Alterado de block para inline-block */
-  margin-bottom: 0.8rem;
+  margin: 15px 0 0.8rem 5px;
   font-size: 20pt;
-  font-weight: 600;
-  color: #2d3436;
-  background-color: #ffeaa7; /* Cor de fundo */
+  background-color: #343a40; /*Cor de fundo */
   padding: 5px 15px; /* Apenas ao redor do texto */
   border-radius: 8px; /* Cantos arredondados */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group label {
+  color: var(--light-gray);
 }
 
 input,
@@ -291,7 +297,7 @@ textarea:focus {
 .checkbox-label {
   margin-left: 8px;
   font-weight: 500;
-  color: var(--primary-dark);
+  color: var(--light-gray);
 }
 
 /* ===== CAROUSEL DINÂMICO ===== */
