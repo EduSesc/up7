@@ -71,7 +71,10 @@ h2 {
   color: var(--antigos-primary);
   border-bottom: 2px solid var(--primary-gold);
 }
-
+.sombra {
+  text-shadow: -1px -1px 0 var(--primary-gold), 1px -1px 0 var(--primary-gold),
+    -1px 1px 0 var(--primary-gold), 1px 1px 0 var(--primary-gold);
+}
 .form-group {
   margin-bottom: 1.5rem;
 }
@@ -488,3 +491,4 @@ button {
     flex-direction: column;
   }
 }
+
