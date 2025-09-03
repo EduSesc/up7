@@ -82,15 +82,15 @@
     <div class="space"><br></div>
 
     <div class="container">
-        <h1><br>Gerenciamento de Vídeos</h1>
+        <h1 class="sombra"><br>Gerenciamento de Vídeos - UP7 Antigos</h1>
 
         <!-- Alertas -->
         <div id="alert-success" class="alert alert-success"></div>
         <div id="alert-error" class="alert alert-error"></div>
 
         <main>
-            <h2>Adicionar/Editar Vídeo</h2>
             <form id="video-form">
+                <div class="form-row">
                 <div class="editing-indicator" id="editing-indicator">Editando</div>
                 <input type="hidden" id="video-id">
 
@@ -99,6 +99,7 @@
 
                 <label for="description">Descrição:</label>
                 <textarea id="description" placeholder="Descrição do vídeo" rows="3"></textarea>
+                </div>
 
                 <label for="youtube-url">URL do YouTube:</label>
                 <input type="url" id="youtube-url" placeholder="https://www.youtube.com/embed/..." required>
@@ -426,5 +427,6 @@
         </script>
 
 </body>
+
 
 </html>
