@@ -1,25 +1,27 @@
-// IMPORT SUPABASE (ESM)
+// IMPORT SUPABASE
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-// -- CONFIGURAÇÕES SUPABASE (use suas chaves)
+// -- CONFIGURAÇÕES SUPABASE
 const supabaseUrl = "https://wthcwllhzbahvnnjqlko.supabase.co";
 const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind0aGN3bGxoemJhaHZubmpxbGtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ1MTk5NjMsImV4cCI6MjA3MDA5NTk2M30.7uzMcp8NsyxYuMmN7nnbBB0dJITJ_C7O7Ck0HFQgbOA";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// -- IDs DO HTML QUE ESTE SCRIPT USA (verifique que existem)
+// URL fixa do banner
+const bannerUrl = "https://i.ibb.co/1f7RWhFP/transpaxup.jpg";
+
+// -- IDs DO HTML
 const elements = {
-  form: document.getElementById("car-form"), // formulário principal
-  list: document.getElementById("vehicle-list"), // ul/li onde lista veículos
+  form: document.getElementById("car-form"),
+  list: document.getElementById("vehicle-list"),
   cancelBtn: document.getElementById("cancel-edit"),
-  galleryUrlsInput: document.getElementById("gallery_urls"), // pode ser hidden
+  galleryUrlsInput: document.getElementById("gallery_urls"),
   galleryPreview: document.getElementById("gallery-preview"),
   uploadGalleryBtn: document.getElementById("upload-gallery-btn"),
   coverImageUrlInput: document.getElementById("cover_image_url"),
   uploadCoverBtn: document.getElementById("upload-cover-btn"),
   coverPreview: document.getElementById("cover-preview"),
   priceInput: document.getElementById("price"),
-  // campos do formulário (presumidos)
   title: document.getElementById("title"),
   brand: document.getElementById("brand"),
   otherBrand: document.getElementById("other_brand"),
@@ -46,13 +48,13 @@ let state = {
   imageUrls: [], // array para gallery_urls
 };
 
-// Cloudinary config (mantive seu cloudName e preset)
+// Cloudinary config
 const cloudinaryConfig = {
   cloudName: "du53gt50t",
   uploadPreset: "ml_default",
 };
 
-// widgets Cloudinary (usa cloudinary.createUploadWidget no global)
+// widgets Cloudinary
 const widgets = {
   gallery:
     typeof cloudinary !== "undefined"
@@ -304,7 +306,7 @@ window.editVehicle = async function (id) {
 
     state.editId = id;
 
-    // Preencher TODOS os campos do formulário (confira os ids no HTML)
+    // Preencher TODOS os campos do formulário
     elements.title.value = data.title || "";
     elements.brand.value = data.brand || "";
     // se marca não está na lista, mostra campo other_brand
@@ -327,7 +329,6 @@ window.editVehicle = async function (id) {
 
     // preço formatado (centavos -> reais)
     const priceInReais = (data.price || 0) / 100;
-    // definir diretamente o valor sem disparar lógica de caret complicada
     elements.priceInput.value = priceInReais.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
@@ -426,7 +427,7 @@ function setupEventListeners() {
     );
   }
 
-  // se tiver input file para upload manual via fetch (opcional)
+  // se tiver input file para upload manual via fetch
   if (elements.uploadGalleryInputFile) {
     elements.uploadGalleryInputFile.addEventListener("change", async (e) => {
       const files = Array.from(e.target.files || []);
@@ -555,7 +556,7 @@ function setupEventListeners() {
         short_description: elements.short_description.value.trim(),
         detailed_description: elements.detailed_description.value.trim(),
         cover_image_url: elements.coverImageUrlInput.value.trim() || null,
-        gallery_urls: galleryArray,
+        gallery_urls: galleryArray ? [...galleryArray, bannerUrl] : [bannerUrl],
         category: elements.category.value,
         vehicle_type: elements.vehicle_type.value,
         is_featured: elements.is_featured.checked,
