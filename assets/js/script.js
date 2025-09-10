@@ -195,7 +195,7 @@ async function loadFeaturedCars() {
         )} km</p>
           <p class="short-description">${car.short_description}</p>
           <p class="price">${formatarPreco(car.price)}</p>
-          <p><a href="detalhes.html?id=${produto.id}">Ver detalhes</a></p>
+          <p><a href="detalhes.html?id=${car.id}">Ver detalhes</a></p>
           </div>
       </div>
     `
